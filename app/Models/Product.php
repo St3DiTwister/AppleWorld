@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Product extends Model
 {
@@ -17,5 +18,9 @@ class Product extends Model
             return $this->pivot->count * $this->price;
         }
         return $this->price;
+    }
+
+    public function favourites(){
+        return $this->hasOne(Favourite::class)->where('user_id', Auth::id());
     }
 }

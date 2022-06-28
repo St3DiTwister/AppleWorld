@@ -151,7 +151,7 @@
         </div>
         <div class="col-9 wrapper">
             @foreach($products as $product)
-                <div class="col-lg-3 col-3 {{isset($cat_name) ? '' : 'mt-4'}} w-25 w-30 offset_helper">
+                <div class="col-lg-3 col-3 {{isset($cat_name) ? '' : 'mt-4'}} w-30 offset_helper">
                     <a href="#" class="text-center text-decoration-none">
                     <div class="card align-items-center w-auto card-border mb-4">
                         <img src="{{Storage::url($product['img'])}}" class="card-img w-50 mt-4" alt="photo">
@@ -164,7 +164,11 @@
                                 <p class="fs-4 fw-bold">{{$thousands . ' ' . mb_substr($product['price'], strlen($thousands))}} ₽</p>
                                 <div class="ms-sm-5 row align-items-center justify-content-center">
                                     <div class="col-2">
-                                        <a href="#"><img src="{{asset('img/unlike.svg')}}"></a>
+                                        @if(!is_null($product->favourites))
+                                            <a href="{{route('unlike', $product)}}"><img src="{{asset('img/liked.svg')}}"></a>
+                                        @else
+                                            <a href="{{route('like', $product)}}"><img src="{{asset('img/unliked.svg')}}"></a>
+                                        @endif
                                     </div>
                                     <div class="col-10">
                                         <a href="{{route('basketAdd', $product)}}" class="btn w-75 p-2 btn-success">В корзину</a>

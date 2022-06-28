@@ -11,6 +11,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script type="text/javascript" src="{{asset('js/jquery-3.6.0.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/toastr.min.js')}}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -19,6 +21,26 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/helper.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('css/toastr.css')}}">
+
+    <script>
+        $(document).ready(function (){
+            toastr.options = {
+                "positionClass": "toast-bottom-right",
+                "progressBar": true,
+                "timeOut": "3000",
+            }
+            @if(session()->has('basket_add') and Route::currentRouteName() != 'basket')
+                toastr.success('{{session()->get('basket_add')}}');
+            @endif
+            @if(session()->has('like_info'))
+                toastr.info('{{session()->get('like_info')}}');
+            @endif
+            @if(session()->has('like_success'))
+                toastr.success('{{session()->get('like_success')}}');
+            @endif
+        });
+    </script>
 </head>
 <body>
     <div id="app">
@@ -63,14 +85,24 @@
                             @endif
                         @else
                             <li class="nav-item me-sm-3">
-                                <a class="nav-link" href="{{route('basket')}}">{{__('Избранное')}}</a>
+                                @php
+                                  $favourites = count(\App\Models\User::find(Auth::id())->favourites);
+                                @endphp
+                                <a class="nav-link" href="{{route('basket')}}">@if($favourites != 0)<span class="nav-count">{{$favourites}}</span>@endif{{__('Избранное')}}</a>
                             </li>
                             <li class="nav-item me-sm-3">
-                                <a class="nav-link" href="{{route('basket')}}">{{__('Корзина')}}</a>
+                                @php
+                                    try {
+                                        $basket = \App\Models\User::find(Auth::id())->currentOrder[0]->getCount();
+                                    } catch (Exception $e){
+                                        $basket = 0;
+                                    }
+                                @endphp
+                                <a class="nav-link" href="{{route('basket')}}">@if($basket != 0)<span class="nav-count">{{$basket}}</span>@endif{{__('Корзина')}}</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->login }}
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('profile') }}">{{ __('Профиль') }}</a>

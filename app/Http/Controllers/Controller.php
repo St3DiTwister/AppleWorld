@@ -8,7 +8,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Facades\DB;
 
 class Controller extends BaseController
 {
@@ -17,7 +16,6 @@ class Controller extends BaseController
     {
         if (isset($_GET['search'])) {
             $products = Product::where('name', 'like', '%'.$_GET['search'].'%')->get();
-//            $products = DB::table('products')->where('name', 'like', '%'.$_GET['search'].'%')->get();
         }
         else {
             $products = Product::all();

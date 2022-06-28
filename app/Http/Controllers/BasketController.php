@@ -53,7 +53,8 @@ class BasketController extends Controller
         else {
             $order->products()->attach($productId);
         }
-        return redirect()->route('basket');
+        session()->flash('basket_add', 'Товар добавлен в корзину!');
+        return redirect()->back();
     }
 
     public function remove($productId){

@@ -31,7 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/basketDelete/{id}', [BasketController::class, 'delete'])->name('basketDelete');
     Route::get('/basket/place', [BasketController::class, 'place'])->name('basketPlace');
     Route::post('/basket/confirm', [BasketController::class, 'confirm'])->name('basketConfirm');
-    Route::post('/like', [LikeController::class, 'like'])->name('like');
-    Route::post('/unlike', [LikeController::class, 'unlike'])->name('unlike');
+    Route::get('/like/{id}', [LikeController::class, 'like'])->name('like');
+    Route::get('/unlike/{id}', [LikeController::class, 'unlike'])->name('unlike');
 });
 Route::get('/category/{slug}', [HomeController::class, 'category'])->name('category');
