@@ -18,12 +18,13 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/helper.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+            <div class="container container-desktop">
+                <a class="navbar-brand fw-bold p-3" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -31,16 +32,23 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
+                    <ul class="navbar-nav me-0 me-sm-5">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Категории') }}</a>
+                            <a class="nav-link" href="{{ route('categories') }}">{{ __('Категории') }}</a>
                         </li>
                     </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
+                    <ul class="navbar-nav w-100 ms-sm-5 me-sm-5">
+                        <li class="nav-item w-100">
+                            <form action="{{route('main')}}" method="get" class="search_form">
+                                <div class="input-group">
+                                    <input type="text" required class="form-control bg-transparent search-input" name="search" placeholder="Введите название товара" value="{{$_GET['search'] ?? ''}}"
+                                           aria-label="Введите название товара" aria-describedby="basic-addon2">
+                                    <button type="submit" class="input-group-text bg-transparent border-0 position-absolute search-loupe" id="basic-addon2"><img src="{{asset('img/search.png')}}" alt="лупа"/></button>
+                                </div>
+                            </form>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-0 me-0 ms-sm-5 me-sm-4">
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
@@ -54,15 +62,18 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">{{__('Корзина')}}</a>
+                            <li class="nav-item me-sm-3">
+                                <a class="nav-link" href="{{route('basket')}}">{{__('Избранное')}}</a>
+                            </li>
+                            <li class="nav-item me-sm-3">
+                                <a class="nav-link" href="{{route('basket')}}">{{__('Корзина')}}</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('home') }}">{{ __('Профиль') }}</a>
+                                    <a class="dropdown-item" href="{{ route('profile') }}">{{ __('Профиль') }}</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -80,7 +91,19 @@
         </nav>
 
         <main class="py-4">
-            @yield('content')
+            <div class="container">
+                @if(session()->has('success'))
+                    <p class="alert alert-success">
+                        {{session()->get('success')}}
+                    </p>
+                @endif
+                @if(session()->has('error'))
+                    <p class="alert alert-danger">
+                        {{session()->get('error')}}
+                    </p>
+                @endif
+                @yield('content')
+            </div>
         </main>
     </div>
 </body>

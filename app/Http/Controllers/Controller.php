@@ -2,12 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    public function main()
+    {
+        if (isset($_GET['search'])) {
+            $products = Product::where('name', 'like', '%'.$_GET['search'].'%')->get();
+//            $products = DB::table('products')->where('name', 'like', '%'.$_GET['search'].'%')->get();
+        }
+        else {
+            $products = Product::all();
+        }
+        return view('main', compact('products'));
+    }
+
+    public function show_categories()
+    {
+        $categories = Category::all();
+        return view('categories', compact('categories'));
+    }
 }
