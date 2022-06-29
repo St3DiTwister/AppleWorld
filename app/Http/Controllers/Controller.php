@@ -28,4 +28,11 @@ class Controller extends BaseController
         $categories = Category::all();
         return view('categories', compact('categories'));
     }
+
+    public function category($slug){
+        $cat = Category::where('slug', $slug)->first();
+        $products = Product::all()->where('category_id', $cat->id);
+        $cat_name = $cat->name;
+        return view('main', compact('products', 'cat_name'));
+    }
 }
