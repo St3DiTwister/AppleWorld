@@ -63,6 +63,10 @@ h1, h2, h3, h4, h5, p, a, b {
     border-color: #457B9D;
 }
 
+.btn-warning {
+    background-color: #E63946;
+}
+
 
 .search-loupe {
     right: 0;
@@ -127,3 +131,6 @@ h1, h2, h3, h4, h5, p, a, b {
     font-size: 20px;
 }
 
+.btn-radius {
+    border-radius: 7px;
+}

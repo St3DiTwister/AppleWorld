@@ -22,6 +22,12 @@ class Order extends Model
         return $count;
     }
 
+    public function getPluralCount($str){
+        $number = $this->getCount();
+        $cases = array (2, 0, 1, 1, 1, 2);
+        return $number.' '.$str[ ($number%100>4 && $number%100<20)? 2: $cases[min($number%10, 5)] ];
+    }
+
     public function getFullPrice(){
         $sum = 0;
         foreach ($this->products as $product){

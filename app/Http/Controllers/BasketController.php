@@ -8,8 +8,6 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use function Webmozart\Assert\Tests\StaticAnalysis\stringWillNotBeRedundantIfAssertingAndNotUsingEither;
-
 class BasketController extends Controller
 {
     public function find_order(){
@@ -40,7 +38,8 @@ class BasketController extends Controller
     public function add($productId){
         $order = session('orderId');
         if (is_null($order)){
-            $order = $this->find_order();
+            $orderId = $this->find_order();
+            $order = Order::find($orderId);
         }
         else {
             $order = Order::find($order);
