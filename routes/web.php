@@ -27,11 +27,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [UserController::class, 'index'])->name('profile');
     Route::get('/basket', [BasketController::class, 'show'])->name('basket');
     Route::get('/basketAdd/{id}', [BasketController::class, 'add'])->name('basketAdd');
+    Route::post('/basketAddPOST', [BasketController::class, 'addPOST'])->name('basketAddPOST');
     Route::get('/basketRemove/{id}', [BasketController::class, 'remove'])->name('basketRemove');
     Route::get('/basketDelete/{id}', [BasketController::class, 'delete'])->name('basketDelete');
     Route::get('/basket/place', [BasketController::class, 'place'])->name('basketPlace');
     Route::post('/basket/confirm', [BasketController::class, 'confirm'])->name('basketConfirm');
     Route::get('/like/{id}', [LikeController::class, 'like'])->name('like');
     Route::get('/unlike/{id}', [LikeController::class, 'unlike'])->name('unlike');
+    Route::get('/favourites', [Controller::class, 'favourites'])->name('favourites');
 });
 Route::get('/category/{slug}', [Controller::class, 'category'])->name('category');

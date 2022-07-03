@@ -88,7 +88,7 @@
                                 @php
                                   $favourites = count(\App\Models\User::find(Auth::id())->favourites);
                                 @endphp
-                                <a class="nav-link" href="{{route('basket')}}">@if($favourites != 0)<span class="nav-count">{{$favourites}}</span>@endif{{__('Избранное')}}</a>
+                                <a class="nav-link" href="{{route('favourites')}}">@if($favourites != 0)<span class="nav-count">{{$favourites}}</span>@endif{{__('Избранное')}}</a>
                             </li>
                             <li class="nav-item me-sm-3">
                                 @php

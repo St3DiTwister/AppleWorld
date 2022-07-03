@@ -56,6 +56,30 @@ class BasketController extends Controller
         return redirect()->back();
     }
 
+    public function addPOST(Request $request){
+        $order = session('orderId');
+        if (is_null($order)){
+            $orderId = $this->find_order();
+            $order = Order::find($orderId);
+        }
+        else {
+            $order = Order::find($order);
+        }
+        $products = $request->only('products');
+        foreach ($products['products'] as $productId){
+            if ($order->products->contains($productId)){
+                $pivotRow = $order->products()->where('product_id', $productId)->first()->pivot;
+                $pivotRow->count++;
+                $pivotRow->update();
+            }
+            else {
+                $order->products()->attach($productId);
+            }
+        }
+        session()->flash('basket_add', 'Товар добавлен в корзину!');
+        return redirect()->back();
+    }
+
     public function remove($productId){
         $order = Order::find(session('orderId'));
         if ($order->products->contains($productId)){

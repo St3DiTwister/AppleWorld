@@ -41,6 +41,10 @@ h1, h2, h3, h4, h5, p, a, b {
     box-shadow: none;
 }
 
+.btn-success:focus{
+    outline: 0 !important;
+}
+
 .btn-success:active {
     border-color: transparent;
 }
@@ -55,6 +59,7 @@ h1, h2, h3, h4, h5, p, a, b {
     font-weight: 600;
     background: transparent;
     transition: 0.5s all;
+    outline: none;
 }
 
 .btn-danger:hover {
@@ -65,8 +70,9 @@ h1, h2, h3, h4, h5, p, a, b {
 
 .btn-warning {
     background-color: #E63946;
+    transition: 0.1s all;
+    outline: none;
 }
-
 
 .search-loupe {
     right: 0;
@@ -134,3 +140,67 @@ h1, h2, h3, h4, h5, p, a, b {
 .btn-radius {
     border-radius: 7px;
 }
+
+.basket-link {
+    height: 45px;
+    width: 45px;
+}
+
+.custom-checkbox {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+
+.custom-checkbox+label {
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+}
+.custom-checkbox+label::before {
+    content: '';
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    border: 1px solid #adb5bd;
+    border-radius: 0.25em;
+    margin-right: 0.5em;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 50% 50%;
+    cursor: pointer;
+}
+
+.card-border-selected {
+    border-color: #1D3557;
+}
+
+.custom-checkbox:checked+label::before {
+    border-color: #1D3557;
+    background-color: #1D3557;
+    background-image: url("../img/select.svg");
+}
+
+.custom-checkbox:not(:disabled):not(:checked)+label:hover::before {
+    border-color: #1D3557;
+}
+.custom-checkbox:not(:disabled):active+label::before {
+    background-color: #1D3557;
+    border-color: #1D3557;
+}
+.custom-checkbox:focus+label::before {
+    box-shadow: #1D3557;
+}
+.custom-checkbox:focus:not(:checked)+label::before {
+    border-color: #1D3557;
+}
+
+.order-status {
+    background: #FF9770;
+    border-radius: 5px;
+    padding: 7px 16px;
+    color: white;
+}
+
