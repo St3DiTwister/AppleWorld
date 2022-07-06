@@ -12,10 +12,10 @@
                             <a href="#" class="text-center text-decoration-none">
                                 <div class="col-10">
                                     <div class="card align-items-center text-center card-border" id="card_{{$product->id}}">
-                                        <img src="{{Storage::url($product['img'])}}" class="card-img w-50 mt-2" alt="photo">
+                                        <img src="{{Storage::url($product['img'])}}" class="card-img w-50 mt-4" alt="photo">
                                         <div class="card-body">
                                             <h5 class="card-title"><a href="#" class="text-decoration-none">{{$product['name']}}</a></h5>
-                                            <p class="fs-4 fw-bold">{{number_format($product['price'], 0, ',', ' ')}} руб.</p>
+                                            <p class="fs-4 fw-bold">@price_format($product['price']) руб.</p>
                                             <p hidden id="price_{{$product->id}}">{{$product['price']}}</p>
                                         </div>
                                     </div>

@@ -158,7 +158,7 @@
                         <div class="card-body text-center w-100 pb-5">
                             <h5 class="card-title fw-bold">{{$product['name']}}</h5>
                             <div class="row text-center align-items-center justify-content-center">
-                                <p class="fs-4 fw-bold">{{number_format($product['price'], 0, ',', ' ')}} ₽</p>
+                                <p class="fs-4 fw-bold">@price_format($product['price']) ₽</p>
                                 <div class="ms-sm-5 row align-items-center justify-content-center">
                                     <div class="col-2">
                                         @if(!is_null($product->favourites))

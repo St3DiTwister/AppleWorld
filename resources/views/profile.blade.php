@@ -10,10 +10,6 @@
                         {{ session('status') }}
                     </div>
                 @endif
-
-{{--                <div class="card-header">{{ __('Ваши заказы') }}</div>--}}
-
-{{--                <div class="card-body">--}}
                     @if(count($orders) != 0)
                     <div class="accordion accordion-flush" id="accordion">
                         @php($number = 1)
@@ -27,7 +23,7 @@
                                             <span class="order-status">{{$order->status}}</span>
                                         </span>
                                         <span class="col-5 text-end w-50">
-                                            <span class="d-block mb-3 me-5">Цена: <b>{{number_format($order->total_price, 0, ',', ' ')}} ₽</b></span>
+                                            <span class="d-block mb-3 me-5">Цена: <b>@price_format($order->total_price) ₽</b></span>
                                             <span class="me-5">Товаров: {{$order->getCount()}} шт.</span>
                                         </span>
                                     </span>
@@ -40,10 +36,10 @@
                                         <div class="col-lg-3 col-3 {{isset($cat_name) ? '' : 'mt-4'}} w-25 w-30 offset_helper">
                                             <a href="#" class="text-center text-decoration-none">
                                                 <div class="card align-items-center text-center card-border">
-                                                    <img src="{{Storage::url($product['img'])}}" class="card-img w-50 mt-2" alt="photo">
+                                                    <img src="{{Storage::url($product['img'])}}" class="card-img w-50 mt-4" alt="photo">
                                                     <div class="card-body">
                                                         <h5 class="card-title"><a href="#" class="text-decoration-none">{{$product['name']}}</a></h5>
-                                                        <p class="fs-4 fw-bold">{{number_format($product->getPriceForCount(), 0, ',', ' ')}} ₽</p>
+                                                        <p class="fs-4 fw-bold">@price_format($product->getPriceForCount()) ₽</p>
                                                         <p class="fs-5">Количество: {{$product->pivot->count}} шт.</p>
                                                     </div>
                                                 </div>
@@ -56,7 +52,6 @@
                         </div>
                         @php($number++)
                         @endforeach
-{{--                    </div>--}}
                     @else
                         <div class="col-12 text-center">Заказы отсутствуют</div>
                     @endif

@@ -11,10 +11,10 @@
                             <a href="#" class="text-center text-decoration-none">
                                 <div class="col-10">
                                     <div class="card align-items-center text-center card-border">
-                                        <img src="{{Storage::url($product['img'])}}" class="card-img w-50 mt-2" alt="photo">
+                                        <img src="{{Storage::url($product['img'])}}" class="card-img w-50 mt-4" alt="photo">
                                         <div class="card-body">
                                             <h5 class="card-title"><a href="#" class="text-decoration-none">{{$product['name']}}</a></h5>
-                                            <p class="fs-4 fw-bold">{{number_format($product->getPriceForCount(), 0, ',', ' ')}} руб.</p>
+                                            <p class="fs-4 fw-bold">@price_format($product->getPriceForCount()) руб.</p>
                                             <p class="fs-5">Количество: {{$product->pivot->count}} шт.</p>
                                         </div>
                                     </div>
@@ -44,7 +44,7 @@
                 <h5>Итого:</h5>
                 <div class="row justify-content-end">
                     <p class="w-50 fw-bold fs-5">{{$order->getPluralcount(['товар', 'товара', 'товаров'])}}</p>
-                    <p class="w-50 text-end fw-bold fs-5">{{number_format($order->getFullPrice(), 0, ',', ' ')}} ₽</p>
+                    <p class="w-50 text-end fw-bold fs-5">@price_format($order->getFullPrice()) ₽</p>
                 </div>
                 <a href="{{route('basketPlace')}}" class="btn btn-success w-100">Перейти к оформлению</a>
             </div>

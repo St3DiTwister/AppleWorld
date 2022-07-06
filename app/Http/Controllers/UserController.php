@@ -28,6 +28,6 @@ class UserController extends Controller
     public function index()
     {
         $orders = Order::orderBy('updated_at', 'desc')->where('user_id', Auth::id())->whereNotNull('status')->get();
-        return view('home', compact('orders'));
+        return view('profile', compact('orders'));
     }
 }
