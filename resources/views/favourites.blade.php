@@ -14,7 +14,7 @@
                                     <div class="card align-items-center text-center card-border" id="card_{{$product->id}}">
                                         <img src="{{Storage::url($product['img'])}}" class="card-img w-50 mt-4" alt="photo">
                                         <div class="card-body">
-                                            <h5 class="card-title"><a href="#" class="text-decoration-none">{{$product['name']}}</a></h5>
+                                            <h5 class="card-title"><a href="{{route('product', $product->slug)}}" class="text-decoration-none">{{$product['name']}}</a></h5>
                                             <p class="fs-4 fw-bold">@price_format($product['price']) руб.</p>
                                             <p hidden id="price_{{$product->id}}">{{$product['price']}}</p>
                                         </div>

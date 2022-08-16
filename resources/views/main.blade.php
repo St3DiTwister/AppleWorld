@@ -152,9 +152,9 @@
         <div class="col-9 wrapper">
             @foreach($products as $product)
                 <div class="col-lg-3 col-3 {{isset($cat_name) ? '' : 'mt-4'}} w-30 offset_helper">
-                    <a href="#" class="text-center text-decoration-none">
+                    <a href="{{route('product', $product['slug'])}}" class="text-center text-decoration-none">
                     <div class="card align-items-center w-auto card-border mb-4">
-                        <img src="{{Storage::url($product['img'])}}" class="card-img w-50 mt-4" alt="photo">
+                        <img src="{{Storage::url($product['img'])}}" class="card-img w-100 mt-4" height="160px" alt="photo">
                         <div class="card-body text-center w-100 pb-5">
                             <h5 class="card-title fw-bold">{{$product['name']}}</h5>
                             <div class="row text-center align-items-center justify-content-center">

@@ -42,4 +42,9 @@ class Controller extends BaseController
         $favourites = User::find(Auth::id())->favourites;
         return view('favourites', compact('favourites'));
     }
+
+    public function product($slug){
+        $product = Product::where('slug', $slug)->first();
+        return view('product', compact('product'));
+    }
 }

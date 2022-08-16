@@ -37,3 +37,4 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/favourites', [Controller::class, 'favourites'])->name('favourites');
 });
 Route::get('/category/{slug}', [Controller::class, 'category'])->name('category');
+Route::get('/product/{slug}', [Controller::class, 'product'])->name('product');
