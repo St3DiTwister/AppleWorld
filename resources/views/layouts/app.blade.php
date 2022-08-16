@@ -88,7 +88,10 @@
                                 @php
                                   $favourites = count(\App\Models\User::find(Auth::id())->favourites);
                                 @endphp
-                                <a class="nav-link" href="{{route('favourites')}}">@if($favourites != 0)<span class="nav-count">{{$favourites}}</span>@endif{{__('Избранное')}}</a>
+                                <a class="nav-link img-link" href="{{route('favourites')}}">@if($favourites != 0)<span class="nav-count">{{$favourites}}</span>@endif <img src="{{asset('img/unliked.svg')}}" class="link-icon"> </a>
+                            </li>
+                            <li class="nav-item me-sm-3">
+                                <a class="nav-link img-link" href="{{route('favourites')}}">@if($favourites != 0)<span class="nav-count">{{$favourites}}</span>@endif <img src="{{asset('img/comparison.svg')}}" class="link-icon"> </a>
                             </li>
                             <li class="nav-item me-sm-3">
                                 @php
@@ -98,7 +101,7 @@
                                         $basket = 0;
                                     }
                                 @endphp
-                                <a class="nav-link" href="{{route('basket')}}">@if($basket != 0)<span class="nav-count">{{$basket}}</span>@endif{{__('Корзина')}}</a>
+                                <a class="nav-link img-link" href="{{route('basket')}}">@if($basket != 0)<span class="nav-count">{{$basket}}</span>@endif <img src="{{asset('img/basket.svg')}}" class="link-icon"> </a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

@@ -39,6 +39,7 @@ h1, h2, h3, h4, h5, p, a, b {
     font-weight: 600;
     border-color: transparent;
     box-shadow: none;
+    border-radius: 7px;
 }
 
 .btn-success:focus{
@@ -131,7 +132,7 @@ h1, h2, h3, h4, h5, p, a, b {
 .nav-count {
     background: #E63946;
     border-radius: 50%;
-    padding: 2px 10px 2px 10px;
+    padding: 2px 12px 2px 12px;
     margin-right: 5%;
     color: #FFFFFF;
     font-size: 20px;
@@ -204,3 +205,239 @@ h1, h2, h3, h4, h5, p, a, b {
     color: white;
 }
 
+.img-link {
+    display: flex;
+    flex-direction: row;
+}
+
+.link-icon {
+    margin-left: 5px;
+}
+
+.dropdown-toggle::after {
+    content: url("../img/arrow.svg");
+    vertical-align: 0.2em;
+    border: 0;
+}
+
+.slider-background {
+    border: 2px solid #EFF3F8;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.slider-background > button > img {
+    transition: 0.1s all;
+}
+
+.slider-background > button:hover > img {
+    opacity: 0.7;
+}
+
+.slider-active {
+    opacity: 0.5;
+}
+
+.product_storage {
+    padding: 5px 20px;
+    border: 2px solid #EFF3F8;
+    border-radius: 7px;
+    text-decoration: none;
+    color: black;
+    margin-right: 5%;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.public_storage_active {
+    border: 2px solid #1D3557;
+    box-shadow: none;
+}
+
+.product_variable {
+    border: 2px solid lightgrey;
+    background: white;
+    text-decoration: none;
+    padding: 10px 6px;
+    border-radius: 7px;
+}
+
+.product_variable > p {
+    display: inline-block;
+    padding: 4px;
+    border-radius: 5px;
+}
+
+.product_variable_active {
+    border: 2px solid #1D3557;
+}
+
+.product_button_border {
+    border: 2px solid #ACB5C2;
+    padding: 17px 14px;
+    margin-top: 10%;
+    border-radius: 7px;
+}
+
+.fix-margin {
+    width: 50px !important;
+    margin-right: 4%;
+}
+
+.breadcrumb-item {
+    font-size: 1.125rem !important;
+}
+
+.breadcrumb-item.active {
+    color: #ACB5C2;
+}
+
+.breadcrumb-item > a {
+    color: #ACB5C2;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    color: #ACB5C2;
+}
+
+.buy_button_product_page {
+    padding: 10px;
+}
+
+
+.product_navbar {
+    border: 2px solid #EFF3F8;
+    background: #FFFFFF;
+    border-radius: 20px 20px 0 0;
+}
+
+.product_specifications {
+    background: #FFFFFF;
+    border: 2px solid #EFF3F8;
+    border-top: 0;
+    border-radius: 0 0 20px 20px;
+}
+
+.product_reviews {
+    background: #FFFFFF;
+    border: 2px solid #EFF3F8;
+    border-top: 0;
+    border-radius: 0 0 20px 20px;
+    display: none;
+}
+
+.not_active {
+    color: #ACB5C2;
+}
+
+.review_header {
+    font-size: 20px;
+    color: #ACB5C2;
+}
+
+.modal_textarea {
+    background: #EFF3F8;
+    border-radius: 7px;
+    resize: none;
+    padding-left: 20px;
+    padding-top: 10px;
+    border: none;
+}
+
+.modal-content {
+    width: 550px;
+    align-items: center;
+    align-content: center;
+    border-radius: 20px;
+}
+
+.btn-close {
+    position: absolute;
+    top: 3px;
+    left: 95%;
+}
+
+a.active.focus,
+a.active:focus,
+a.focus,
+a:active.focus,
+a:active:focus,
+a:focus,
+button.active.focus,
+button.active:focus,
+button.focus,
+button:active.focus,
+button:active:focus,
+button:focus,
+.btn.active.focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn:active:focus,
+.btn:focus {
+    outline: 0!important;
+    outline-color: transparent!important;
+    outline-width: 0!important;
+    outline-style: none!important;
+    box-shadow: 0 0 0 0 rgba(0,123,255,0)!important;
+}
+
+.rating-area {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    margin-left: 10px;
+}
+
+.rating-area > button {
+    margin-left: 30%;
+    width: 50%;
+}
+
+.rating-area:not(:checked) > input {
+    display: none;
+}
+.rating-area:not(:checked) > label {
+    float: left;
+    cursor: pointer;
+}
+.rating-area:not(:checked) > label:before {
+    content: url("/img/star.svg");
+}
+.rating-area > input:checked ~ label {
+    margin-bottom: 11px;
+    content: url("/img/star_active.svg");
+}
+.rating-area:not(:checked) > label:hover,
+.rating-area:not(:checked) > label:hover ~ label {
+    margin-bottom: 11px;
+    content: url("/img/star_active.svg");
+}
+.rating-area > input:checked + label:hover,
+.rating-area > input:checked + label:hover ~ label,
+.rating-area > input:checked ~ label:hover,
+.rating-area > input:checked ~ label:hover ~ label,
+.rating-area > label:hover ~ input:checked ~ label {
+    margin-bottom: 11px;
+    content: url("/img/star_active.svg");
+}
+.rate-area > label:active {
+    position: relative;
+}
+
+.rating-result {
+    width: 180px;
+}
+.rating-result span {
+    padding: 0;
+    margin: 0 3px;
+    line-height: 1;
+    color: transparent;
+    text-shadow: 1px 1px #bbb;
+}
+.rating-result > span:before {
+    content: url("/img/star.svg");
+}
+.rating-result > span.active {
+    content: url("/img/star_active.svg");
+}

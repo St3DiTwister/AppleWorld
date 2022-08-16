@@ -8,12 +8,12 @@
                 @foreach($order->products as $product)
                     <div class="col-5 col-lg-5 mt-5 ms-3">
                         <div class="row m-0">
-                            <a href="#" class="text-center text-decoration-none">
+                            <a href="{{route('product', $product->slug)}}" class="text-center text-decoration-none">
                                 <div class="col-10">
                                     <div class="card align-items-center text-center card-border">
                                         <img src="{{Storage::url($product['img'])}}" class="card-img w-50 mt-4" alt="photo">
                                         <div class="card-body">
-                                            <h5 class="card-title"><a href="#" class="text-decoration-none">{{$product['name']}}</a></h5>
+                                            <h5 class="card-title"><a href="{{route('product', $product->slug)}}" class="text-decoration-none">{{$product['name']}}</a></h5>
                                             <p class="fs-4 fw-bold">@price_format($product->getPriceForCount()) руб.</p>
                                             <p class="fs-5">Количество: {{$product->pivot->count}} шт.</p>
                                         </div>
