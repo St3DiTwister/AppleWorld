@@ -212,6 +212,9 @@ h1, h2, h3, h4, h5, p, a, b {
 
 .link-icon {
     margin-left: 5px;
+    margin-top: 5px;
+    width: 30px;
+    height: 30px;
 }
 
 .dropdown-toggle::after {

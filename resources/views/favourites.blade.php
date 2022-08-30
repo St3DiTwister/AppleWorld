@@ -9,10 +9,10 @@
                     @php($product = $products->product)
                     <div class="col-5 col-lg-5 mt-5 ms-3">
                         <div class="row m-0">
-                            <a href="#" class="text-center text-decoration-none">
+                            <a href="{{route('product', $product['slug'])}}" class="text-center text-decoration-none">
                                 <div class="col-10">
                                     <div class="card align-items-center text-center card-border" id="card_{{$product->id}}">
-                                        <img src="{{Storage::url($product['img'])}}" class="card-img w-50 mt-4" alt="photo">
+                                        <img src="{{Storage::url($product['img'])}}" class="card-img mt-4" height="180px" alt="photo">
                                         <div class="card-body">
                                             <h5 class="card-title"><a href="{{route('product', $product->slug)}}" class="text-decoration-none">{{$product['name']}}</a></h5>
                                             <p class="fs-4 fw-bold">@price_format($product['price']) руб.</p>

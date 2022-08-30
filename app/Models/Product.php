@@ -9,12 +9,13 @@ use Illuminate\Support\Facades\Auth;
 class Product extends Model
 {
     use HasFactory;
-//    public function categories(){
-//        return $this->belongsToMany(Category::class);
-//    }
 
     public function category(){
         return $this->hasOne(Category::class, 'id', 'category_id');
+    }
+
+    public function specification(){
+        return $this->hasMany(Specification::class, 'products_id', 'id');
     }
 
     public function getPriceForCount(){

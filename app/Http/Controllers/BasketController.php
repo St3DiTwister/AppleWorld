@@ -5,101 +5,43 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BasketConfirmRequest;
 use App\Models\Order;
+use App\Services\OrderService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class BasketController extends Controller
 {
-    public function find_order(){
-        $order = Order::get()->where('status', null)->where('user_id', Auth::id());
-        if (count($order) == 0){
-            $order = Order::create(['user_id' => Auth::id()]);
-        } else {
-            $order = $order->first();
-        }
-        session(['orderId' => $order->id]);
-        return $order->id;
+    protected $orderService;
+
+    public function __construct(OrderService $orderService)
+    {
+        $this->orderService = $orderService;
     }
 
     public function show(){
-        $orderId = session('orderId');
-        if (is_null($orderId)){
-            $orderId = $this->find_order();
-        }
-        try {
-            $order = Order::findOrFail($orderId);
-        } catch (\Exception $e){
-            session()->forget('orderId');
-            return redirect()->route('main');
-        }
+        $order = $this->orderService->get_order();
         return view('basket', compact('order'));
     }
 
     public function add($productId){
-        $order = session('orderId');
-        if (is_null($order)){
-            $orderId = $this->find_order();
-            $order = Order::find($orderId);
-        }
-        else {
-            $order = Order::find($order);
-        }
-        if ($order->products->contains($productId)){
-            $pivotRow = $order->products()->where('product_id', $productId)->first()->pivot;
-            $pivotRow->count++;
-            $pivotRow->update();
-        }
-        else {
-            $order->products()->attach($productId);
-        }
-        session()->flash('basket_add', 'Товар добавлен в корзину!');
+        $this->orderService->add_to_order($productId);
         return redirect()->back();
     }
 
-    public function addPOST(Request $request){
-        $order = session('orderId');
-        if (is_null($order)){
-            $orderId = $this->find_order();
-            $order = Order::find($orderId);
-        }
-        else {
-            $order = Order::find($order);
-        }
-        $products = $request->only('products');
-        foreach ($products['products'] as $productId){
-            if ($order->products->contains($productId)){
-                $pivotRow = $order->products()->where('product_id', $productId)->first()->pivot;
-                $pivotRow->count++;
-                $pivotRow->update();
-            }
-            else {
-                $order->products()->attach($productId);
-            }
-        }
-        session()->flash('basket_add', 'Товар добавлен в корзину!');
+    public function addPOST(Request $request)
+    {
+        $this->orderService->add_to_order_postMethod($request->only('products'));
         return redirect()->back();
     }
 
     public function remove($productId){
-        $order = Order::find(session('orderId'));
-        if ($order->products->contains($productId)){
-            $pivotRow = $order->products()->where('product_id', $productId)->first()->pivot;
-            if ($pivotRow->count < 2){
-                $order->products()->detach($productId);
-            } else {
-                $pivotRow->count--;
-                $pivotRow->update();
-            }
-        }
+        $this->orderService->remove_from_order($productId);
         return redirect()->route('basket');
 
     }
 
     public function delete($productId)
     {
-        $order = Order::find(session('orderId'));
-        $order->products()->detach($productId);
-
+        $this->orderService->detach_from_order($productId);
         return redirect()->route('basket');
     }
 
@@ -108,18 +50,7 @@ class BasketController extends Controller
     }
 
     public function confirm(BasketConfirmRequest $request){
-        $orderId = session('orderId');
-        if (is_null($orderId)){
-            $orderId = $this->find_order();
-        }
-        $order = Order::findOrFail($orderId);
-        $success = $order->saveOrder($request->telephone);
-        if ($success){
-            session()->flash('success', 'Ваш заказ принят в обработку!');
-        } else {
-            session()->flash('error', 'Что-то пошло не так...');
-        }
-        session()->forget('orderId');
+        $this->orderService->confirm_order($request->telephone);
         return redirect()->route('main');
     }
 }

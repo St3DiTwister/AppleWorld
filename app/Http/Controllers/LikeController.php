@@ -4,17 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Favourite;
+use App\Services\FavouriteService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
 {
-    public function getFavourite($productId){
-        return Favourite::where('user_id', Auth::id())->where('product_id', $productId);
+    protected $favouriteService;
+
+    public function __construct(FavouriteService $favouriteService)
+    {
+        $this->favouriteService = $favouriteService;
     }
+
     public function like($productId){
-        $favourites = $this->getFavourite($productId)->get();
-        if (count($favourites) != 0){
+        $favourites = $this->favouriteService->getFavourite($productId);
+        if (count($favourites->get()) != 0){
             session()->flash('like_info', 'Товар уже в избранном');
         } else {
             Favourite::create(['user_id' => Auth::id(), 'product_id' => $productId]);
@@ -25,7 +30,7 @@ class LikeController extends Controller
     }
 
     public function unlike($productId){
-        $favourites = $this->getFavourite($productId);
+        $favourites = $this->favouriteService->getFavourite($productId);
         if (count($favourites->get()) != 0){
             $favourites->delete();
             session()->flash('like_success', 'Товар удален из избранного');

@@ -34,7 +34,7 @@
                                     <div class="row">
                                     @foreach($order->products as $product)
                                         <div class="col-lg-3 col-3 {{isset($cat_name) ? '' : 'mt-4'}} w-25 w-30 offset_helper">
-                                            <a href="#" class="text-center text-decoration-none">
+                                            <a href="{{route('product', $product['slug'])}}" class="text-center text-decoration-none">
                                                 <div class="card align-items-center text-center card-border">
                                                     <img src="{{Storage::url($product['img'])}}" class="card-img w-50 mt-4" alt="photo">
                                                     <div class="card-body">

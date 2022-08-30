@@ -27,26 +27,40 @@
         </div>
         <div class="col-6 mt-4">
             <p class="fs-3 fw-bolder mb-4">{{$product->name}}</p>
-            <div class="row mt-4 mb-4">
-                <div class="col-1">
-                    <p class="fs-5 fw-bolder">Цвет</p>
+            @if($variables != null)
+                <div class="row mt-4 mb-4">
+                    <div class="col-1">
+                        <p class="fs-5 fw-bolder">Цвет</p>
+                    </div>
+                    <div class="col-10 mx-4">
+                        <a href="" class="product_variable product_variable_active m-md-2"><p style="background: {{$product->color}};">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></a>
+                        @foreach($variables['color'] as $slug => $color)
+                            @if($color != $product->color)
+                                <a href="{{route('product', $slug)}}" class="product_variable m-md-2"><p style="background: {{$color}};">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></a>
+                            @endif
+                        @endforeach
+                    </div>
                 </div>
-                <div class="col-10 mx-4">
-                    <a href="#" class="product_variable product_variable_active m-md-2"><p style="background: #266584;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></a>
-                    <a href="#" class="product_variable m-md-2"><p style="background: #BB4443;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></a>
-                    <a href="#" class="product_variable m-md-2"><p style="background: #3D3D3D;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p></a>
+            @endif
+            @if($variables != null)
+                <div class="row mb-4 mt-4">
+                    <div class="col-2">
+                        <p class="fs-5 fw-bolder">Накопитель</p>
+                    </div>
+                    <div class="col-9 mx-4">
+                        @php
+                            $current_product_array = explode('_', $product->slug);
+                            $current_product_storage = $current_product_array[count($current_product_array)-2];
+                        @endphp
+                        <a href="" class="product_storage public_storage_active">{{$current_product_storage}} ГБ</a>
+                        @foreach($variables["storage"] as $slug => $storage)
+                            @if($storage != $current_product_storage)
+                                <a href="{{route('product', $slug)}}" class="product_storage">{{$storage}} ГБ</a>
+                            @endif
+                        @endforeach
+                    </div>
                 </div>
-            </div>
-            <div class="row mb-4 mt-4">
-                <div class="col-2">
-                    <p class="fs-5 fw-bolder">Накопитель</p>
-                </div>
-                <div class="col-9 mx-4">
-                    <a href="#" class="product_storage public_storage_active">128 ГБ</a>
-                    <a href="#" class="product_storage">256 ГБ</a>
-                    <a href="#" class="product_storage">512 ГБ</a>
-                </div>
-            </div>
+            @endif
             <p class="fs-2 fw-bold mb-4">@price_format($product['price']) ₽</p>
             <div class="row">
                 <div class="col-5">
@@ -67,164 +81,66 @@
                 <button class="btn fs-3" id="specifications_switch">Характеристики</button>
             </div>
             <div class="col-3">
-                <button class="btn fs-3 not_active" id="reviews_switch">Отзывы (1)</button>
+                <button class="btn fs-3 not_active" id="reviews_switch">Отзывы ({{count($reviews)}})</button>
             </div>
             <div class="col-6 text-end">
                 <button class="btn fs-4" id="review_button" data-bs-toggle="modal" data-bs-target="#modal" style="visibility: hidden;">Оставить отзыв <img src="{{asset('img/write_review.svg')}}"></button>
             </div>
         </div>
         <div class="row product_specifications" id="product_specifications">
-            <div class="row mx-1 mt-4">
-                <div class="col-4">
-                    <h3>Основные характеристики</h3>
+            @if($mas == [])
+                <div class="row mx-1 mt-4">
+                    <h3>Характеристики отсутсвуют</h3>
                 </div>
-                <div class="col-8 ">
-                    <div class="row">
-                        <div class="col-6">
-                            <p>Память</p>
+            @else
+                @foreach($mas as $key_main => $value_main)
+                    <div class="row mx-1 mt-4">
+                        <div class="col-4">
+                            <h3>{{$key_main}}</h3>
                         </div>
-                        <div class="col-6">
-                            <p>128 ГБ</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <p>Цвет</p>
-                        </div>
-                        <div class="col-6">
-                            <p>синий</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row mx-1 mt-4">
-                <div class="col-4">
-                    <h3>Процессор</h3>
-                </div>
-                <div class="col-8 ">
-                    <div class="row">
-                        <div class="col-6">
-                            <p>Процессор</p>
-                        </div>
-                        <div class="col-6">
-                            <p>A15 Bionic</p>
+                        <div class="col-8 ">
+                            @foreach($value_main as $key_submain => $value_submain)
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p>{{$key_submain}}</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p>{{$value_submain}}</p>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row mx-1 mt-4">
-                <div class="col-4">
-                    <h3>Дисплей</h3>
-                </div>
-                <div class="col-8 ">
-                    <div class="row">
-                        <div class="col-6">
-                            <p>Диагональ</p>
-                        </div>
-                        <div class="col-6">
-                            <p>6.1"</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <p>Разрешение</p>
-                        </div>
-                        <div class="col-6">
-                            <p>2532x1170</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <p>Яркость</p>
-                        </div>
-                        <div class="col-6">
-                            <p>800 кд/м²</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <p>Контрастность</p>
-                        </div>
-                        <div class="col-6">
-                            <p>20000000:1</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <p>Плотность пикселей на дюйм</p>
-                        </div>
-                        <div class="col-6">
-                            <p>460 пикс/дюйм</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <p>Тип дисплея</p>
-                        </div>
-                        <div class="col-6">
-                            <p>OLED</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <p>Технологии дисплея</p>
-                        </div>
-                        <div class="col-6">
-                            <p>True tone</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row mx-1 mt-4">
-                <div class="col-4">
-                    <h3>Основные характеристики</h3>
-                </div>
-                <div class="col-8 ">
-                    <div class="row">
-                        <div class="col-6">
-                            <p>Память</p>
-                        </div>
-                        <div class="col-6">
-                            <p>128 ГБ</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <p>Цвет</p>
-                        </div>
-                        <div class="col-6">
-                            <p>синий</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                @endforeach
+            @endif
         </div>
         <div class="row product_reviews" id="product_reviews">
-            <div class="row mx-1 mt-4">
-                <div class="col-2">
-                    <h3>Евгения</h3>
-                    <div class="rating-result">
-                        <span class="active"></span>
-                        <span class="active"></span>
-                        <span class="active"></span>
-                        <span></span>
-                        <span></span>
+            @foreach($reviews as $review)
+                <div class="row mx-1 mt-4">
+                    <div class="col-2">
+                        <h3>{{$review->name}}</h3>
+                        <div class="rating-result">
+                            @for($i=0; $i<$review->rating; $i++)
+                                <span class="active"></span>
+                            @endfor
+                            @for($i=$review->rating; $i < 5; $i++)
+                                <span></span>
+                            @endfor
+                        </div>
+                    </div>
+                    <div class="col-10">
+                        <div class="row">
+                            <div class="col-6">
+                                <p class="review_header">Отзыв о модели {{$product->name}}</p>
+                            </div>
+                            <div class="col-6 text-end">
+                                <p class="review_header">{{$review->created_at}}</p>
+                            </div>
+                            <p class="fs-4">{{$review->review}}</p>
+                        </div>
                     </div>
                 </div>
-                <div class="col-10">
-                    <div class="row">
-                        <div class="col-6">
-                            <p class="review_header">Отзыв о модели Apple Iphone 13, 512 ГБ, синий</p>
-                        </div>
-                        <div class="col-6 text-end">
-                            <p class="review_header">26.09.2021</p>
-                        </div>
-                        <p class="fs-4">Однозначно это моя последняя модель, и многие друзья также разочарованы в покупке. Камеры телефонов за 30к работают получше, эппл пей не работает, компания плюет на пользователей,
-                            убирают по своему желанию приложения, убирают оплату картами, никакой надежности нет в том что завтра твой телефон не превратится в кирпич. Если дорожите своими нервами и деньгами,
-                            берите Самсунг, на поверку он оказался гораздо лучшим решением и более преданным своим пользователям.</p>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
     <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
@@ -234,14 +150,14 @@
                     <h5 class="modal-title text-center fw-bold" id="modalLabel">Оставить отзыв</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                 </div>
-                <form action="#" method="post">
+                <form action="{{url()->current()}}/reviewSend" method="post">
                     <div class="modal-body">
                             @csrf
                             <textarea name="review" cols="55" rows="5" placeholder="Отзыв" required class="modal_textarea"></textarea>
                     </div>
                     <div class="mb-4 m-2">
                         <div class="rating-area">
-                            <button type="button" class="btn btn-success">Отправить</button>
+                            <button type="submit" class="btn btn-success">Отправить</button>
                             <input type="radio" id="star-5" name="rating" value="5">
                             <label for="star-5" title="Оценка «5»"></label>
                             <input type="radio" id="star-4" name="rating" value="4">
